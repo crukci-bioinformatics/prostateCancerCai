@@ -1,7 +1,7 @@
 %\VignetteKeywords{Database}
-%\VignetteDepends{prostateCancerBest}
-%\VignettePackage{prostateCancerBest}
-%\VignetteIndexEntry{prostateCancerBest}
+%\VignetteDepends{prostateCancerCai}
+%\VignettePackage{prostateCancerCai}
+%\VignetteIndexEntry{prostateCancerCai}
 \documentclass{article}
 
 \begin{document}
