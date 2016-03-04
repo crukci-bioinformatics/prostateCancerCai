@@ -1,6 +1,6 @@
  \docType{data}
-    \name{varambally}
-    \alias{varambally}
+    \name{cai}
+    \alias{cai}
     \title{The Cai Cohort}
     \format{a \code{ExpressionSet} instance, 1 row per Affymetrix microarray probe.}
     \source{
