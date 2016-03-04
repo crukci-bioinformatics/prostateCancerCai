@@ -1,0 +1,44 @@
+%\VignetteKeywords{Database}
+%\VignetteDepends{prostateCancerBest}
+%\VignettePackage{prostateCancerBest}
+%\VignetteIndexEntry{prostateCancerBest}
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\emph{ERG induces androgen receptor-mediated regulation of SOX9 in prostate cancer. }
+
+\emph{Cai C, Wang H, He HH, Chen S et al. ERG induces androgen receptor-mediated regulation of SOX9 in prostate cancer. J Clin Invest 2013 Mar;123(3):1109-22. PMID: 23426182}
+
+
+In this document, I describe how the GEO data entry for the Varambally data was processed and saved into an object for analysis in Bioconductor. First of all load the relevant libraries for grabbing and manipulaing the data
+
+<<eval=FALSE>>=
+library(GEOquery)
+@
+
+
+Now use the `getGEO` function with the correct ID
+
+<<eval=FALSE>>=
+geoData <- getGEO("GSE32269")[[1]]
+geoData
+@
+
+The phenoData contains lots of metadata from GEO that probably won't be useful for our analysis. We just take the sample name and group colums. 
+
+<<eval=FALSE>>=
+covarTable <- data.frame(ArrayID = pData(geoData)$geo, Sample_Group =pData(geoData)$characteristics_ch1)
+covarTable[,2] <- gsub("metastasis: localized prostate cancer", "HormoneDependent", covarTable[,2])
+covarTable[grep("CRPC",covarTable[,2]),2] <- "CastrateResistant"  
+covarTable[grep("metastasis: normal",covarTable[,2]),2] <- "Benign"  
+pData(geoData) <- covarTable
+pData(geoData)$Sample_Group <- factor(pData(geoData)$Sample_Group,levels=c("Benign","HormoneDependent","CastrateResistant"))
+
+cai <- geoData
+save(cai, file="data/cai.rda",compress="xz")
+@
+
+
+\end{document}
